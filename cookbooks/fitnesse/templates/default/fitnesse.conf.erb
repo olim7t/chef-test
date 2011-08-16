@@ -1,0 +1,15 @@
+description "Fully integrated standalone wiki and acceptance testing framework"
+
+start on runlevel [2345]
+stop on runlevel [016]
+
+env JAVA_HOME=<%=node[:java][:java_home]=%>
+
+env BASEDIR=<%=node[:fitnesse][:program_dir]=%>
+
+env FITNESSE_OPTS="-p <%=node[:fitnesse][:port]=%> -d <%=node[:fitnesse][:data_dir]=%>"
+env USER=<%=node[:fitnesse][:user]=%>
+
+script
+  exec su -c "cd $BASEDIR; $JAVA_HOME/bin/java -jar fitnesse.jar $FITNESSE_OPTS" $USER
+end script
